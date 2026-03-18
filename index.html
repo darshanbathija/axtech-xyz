@@ -7,542 +7,749 @@
   <meta name="description" content="AX Technologies helps founders go to market. Building fintech and edtech platforms that scale to millions of users.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ==========================================
+       CSS VARIABLES
+       ========================================== */
+    :root {
+      --bg-0: #06070B;
+      --bg-1: #0C0D14;
+      --bg-2: #12131C;
+      --bg-3: #1A1B27;
+      --bg-card: rgba(255,255,255,0.025);
+      --bg-card-hover: rgba(255,255,255,0.055);
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.14);
+      --border-accent: rgba(108,92,231,0.3);
 
-    html { scroll-behavior: smooth; }
+      --text-1: #F2F2F5;
+      --text-2: #9399AB;
+      --text-3: #5D6175;
+      --text-4: #3E4155;
 
-    body {
-      font-family: 'Inter', sans-serif;
-      color: #1a1a1a;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+      --accent: #6C5CE7;
+      --accent-light: #A29BFE;
+      --accent-glow: rgba(108,92,231,0.12);
+      --accent-subtle: rgba(108,92,231,0.06);
 
-    /* ======================================
-       SECTION 1: HERO — Purple-Blue Gradient
-       ====================================== */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      min-height: 600px;
-      background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 25%, #4338CA 50%, #1e3a8a 100%);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+      --emerald: #34D399;
+      --sky: #38BDF8;
+      --amber: #FBBF24;
 
-    .hero-nav {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 32px 48px;
-      z-index: 10;
-    }
+      --font-display: 'Space Grotesk', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
 
-    .hero-logo {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #fff;
-      line-height: 1.4;
-    }
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    .hero-nav-link {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      letter-spacing: 0.5px;
-      transition: color 0.2s;
-    }
-    .hero-nav-link:hover { color: #fff; }
+      --r-sm: 8px;
+      --r-md: 12px;
+      --r-lg: 16px;
+      --r-xl: 20px;
+      --r-2xl: 24px;
 
-    /* 3D wireframe mesh canvas */
-    #meshCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 1;
+      --max-w: 1180px;
+      --px: 24px;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      padding: 0 48px;
-      text-align: center;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: 10%;
+    /* ==========================================
+       RESET
+       ========================================== */
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{font-family:var(--font-body);background:var(--bg-0);color:var(--text-1);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    ::selection{background:var(--accent);color:#fff}
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;border:none;cursor:pointer;background:none}
+    ul{list-style:none}
+
+    .container{max-width:var(--max-w);margin:0 auto;padding:0 var(--px)}
+
+    /* Accessible focus ring */
+    :focus-visible{outline:2px solid var(--accent-light);outline-offset:3px;border-radius:4px}
+    :focus:not(:focus-visible){outline:none}
+
+    /* ==========================================
+       KEYFRAMES
+       ========================================== */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes pulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+    @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(12px,-18px)}}
+    @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-15px,12px)}}
+    @keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(10px,15px)}}
+    @keyframes orb1{0%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-50px) scale(1.08)}66%{transform:translate(-30px,30px) scale(.96)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes orb2{0%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,60px) scale(.92)}66%{transform:translate(40px,-25px) scale(1.04)}100%{transform:translate(0,0) scale(1)}}
+    @keyframes lineReveal{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    @keyframes numberCount{from{opacity:0;transform:translateY(16px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    @keyframes borderGlow{0%,100%{border-color:rgba(108,92,231,0.15)}50%{border-color:rgba(108,92,231,0.35)}}
+    @keyframes badgeShimmer{0%{left:-100%}100%{left:200%}}
+    @keyframes subtlePulse{0%,100%{box-shadow:0 0 0 0 rgba(108,92,231,0)}50%{box-shadow:0 0 20px 2px rgba(108,92,231,.08)}}
+
+    /* Noise texture overlay */
+    body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px}
+
+    /* Scroll animation */
+    .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s var(--ease-expo),transform .7s var(--ease-expo)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal.d1{transition-delay:.08s}
+    .reveal.d2{transition-delay:.16s}
+    .reveal.d3{transition-delay:.24s}
+    .reveal.d4{transition-delay:.32s}
+    .reveal.d5{transition-delay:.4s}
+
+    /* ==========================================
+       NAVIGATION
+       ========================================== */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;transition:all .35s var(--ease-smooth)}
+    .nav.is-scrolled{background:rgba(6,7,11,.82);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);border-bottom:1px solid var(--border);padding:12px 0}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between}
+
+    .nav-logo{display:flex;align-items:center;gap:10px;transition:opacity .2s}
+    .nav-logo:hover{opacity:.8}
+    .logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px;color:#fff;position:relative;box-shadow:0 2px 12px rgba(108,92,231,.25)}
+    .logo-mark::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.2));border-radius:inherit}
+    .logo-text{font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:-.2px}
+
+    .nav-menu{display:flex;align-items:center;gap:32px}
+    .nav-link{font-size:14px;font-weight:500;color:var(--text-2);transition:color .25s;position:relative;padding:4px 0}
+    .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--accent-light);transition:width .3s var(--ease-expo)}
+    .nav-link:hover{color:var(--text-1)}
+    .nav-link:hover::after{width:100%}
+
+    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:9px 22px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border-radius:100px;letter-spacing:.2px;transition:all .3s var(--ease-expo);box-shadow:0 2px 12px rgba(108,92,231,.2);position:relative;overflow:hidden}
+    .nav-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.12));opacity:0;transition:opacity .3s}
+    .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(108,92,231,.35)}
+    .nav-cta:hover::before{opacity:1}
+    .nav-cta svg{width:14px;height:14px;transition:transform .3s var(--ease-expo)}
+    .nav-cta:hover svg{transform:translateX(2px)}
+
+    .nav-toggle{display:none;padding:4px}
+    .nav-toggle span{display:block;width:20px;height:2px;background:var(--text-1);border-radius:2px;transition:.3s}
+    .nav-toggle span+span{margin-top:5px}
+
+    /* ==========================================
+       HERO
+       ========================================== */
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:100px 0 60px;overflow:hidden}
+
+    .hero-bg{position:absolute;inset:0;pointer-events:none}
+    .hero-orb{position:absolute;border-radius:50%;filter:blur(120px)}
+    .hero-orb--a{width:550px;height:550px;background:var(--accent);opacity:.18;top:-10%;right:-5%;animation:orb1 22s ease-in-out infinite}
+    .hero-orb--b{width:380px;height:380px;background:var(--sky);opacity:.1;bottom:0;left:-3%;animation:orb2 18s ease-in-out infinite}
+    .hero-orb--c{width:250px;height:250px;background:var(--emerald);opacity:.06;top:50%;left:35%;animation:orb1 25s ease-in-out infinite reverse}
+
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 60% 60% at 50% 45%,black,transparent);-webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 45%,black,transparent)}
+
+    /* Radial glow behind content */
+    .hero-glow{position:absolute;top:40%;left:25%;width:500px;height:400px;background:radial-gradient(ellipse,rgba(108,92,231,.08),transparent 70%);pointer-events:none}
+
+    .hero-content{position:relative;z-index:2;max-width:680px}
+
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 7px;background:var(--accent-subtle);border:1px solid rgba(108,92,231,.18);border-radius:100px;font-size:13px;font-weight:500;color:var(--accent-light);margin-bottom:28px;animation:fadeUp .7s var(--ease-expo) both;position:relative;overflow:hidden}
+    .hero-badge::after{content:'';position:absolute;top:0;width:60px;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);animation:badgeShimmer 4s ease-in-out infinite 2s}
+    .badge-dot{width:7px;height:7px;background:var(--emerald);border-radius:50%;animation:pulse 2.5s ease-in-out infinite;box-shadow:0 0 6px rgba(52,211,153,.4)}
+
+    .hero-h1{font-family:var(--font-display);font-size:clamp(40px,5.5vw,72px);font-weight:700;line-height:1.06;letter-spacing:-2.5px;margin-bottom:24px;animation:fadeUp .7s var(--ease-expo) .08s both}
+    .hero-h1 .gradient{background:linear-gradient(135deg,var(--accent-light) 0%,var(--sky) 50%,var(--emerald) 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradientMove 8s ease infinite}
+
+    .hero-p{font-size:clamp(16px,1.6vw,19px);color:var(--text-2);line-height:1.7;max-width:520px;margin-bottom:40px;animation:fadeUp .7s var(--ease-expo) .16s both}
+
+    .hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;animation:fadeUp .7s var(--ease-expo) .24s both}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-weight:600;border-radius:100px;letter-spacing:.2px;transition:all .35s var(--ease-expo);position:relative;overflow:hidden}
+    .btn svg{width:16px;height:16px;transition:transform .3s var(--ease-expo)}
+    .btn:hover svg{transform:translateX(3px)}
+    .btn:active{transform:scale(.98)!important}
+
+    .btn--primary{padding:15px 32px;background:var(--accent);color:#fff;font-size:15px;box-shadow:0 2px 16px rgba(108,92,231,.2),inset 0 1px 0 rgba(255,255,255,.1),0 0 0 0 rgba(108,92,231,0);animation:subtlePulse 3s ease-in-out infinite}
+    .btn--primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.12));opacity:0;transition:opacity .3s}
+    .btn--primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(108,92,231,.35),inset 0 1px 0 rgba(255,255,255,.1)}
+    .btn--primary:hover::before{opacity:1}
+
+    .btn--ghost{padding:15px 28px;color:var(--text-1);font-size:15px;border:1px solid var(--border);background:transparent}
+    .btn--ghost:hover{border-color:var(--border-hover);background:var(--bg-card);transform:translateY(-1px)}
+
+    /* Hero floating cards */
+    .hero-visual{position:absolute;right:2%;top:50%;transform:translateY(-50%);width:42%;max-width:540px;height:480px;pointer-events:none;animation:fadeIn 1s var(--ease-expo) .5s both}
+
+    .float-card{position:absolute;background:rgba(255,255,255,.035);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.07);border-radius:var(--r-lg);padding:20px 24px;transition:all .4s;animation-timing-function:ease-in-out}
+    .float-card:hover{border-color:rgba(255,255,255,.14);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+
+    .float-card--a{top:5%;right:12%;width:190px;animation:float1 7s ease-in-out infinite}
+    .float-card--b{top:42%;right:2%;width:210px;animation:float2 8s ease-in-out infinite}
+    .float-card--c{bottom:8%;right:20%;width:175px;animation:float3 6.5s ease-in-out infinite}
+
+    .fc-icon{width:36px;height:36px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+    .fc-icon svg{width:18px;height:18px}
+    .fc-icon--purple{background:var(--accent-glow)}
+    .fc-icon--green{background:rgba(52,211,153,.1)}
+    .fc-icon--blue{background:rgba(56,189,248,.1)}
+
+    .fc-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:2px}
+    .fc-value{font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:-.5px}
+
+    /* ==========================================
+       TRUSTED-BY LOGOS BAR
+       ========================================== */
+    .trust-bar{padding:60px 0 0;position:relative}
+    .trust-bar::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:70%;max-width:500px;height:1px;background:linear-gradient(90deg,transparent,var(--border-hover),transparent)}
+    .trust-label{text-align:center;font-size:12px;font-weight:600;color:var(--text-4);text-transform:uppercase;letter-spacing:2px;margin-bottom:28px}
+    .trust-logos{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;opacity:.5}
+    .trust-logo{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text-2);letter-spacing:.3px;transition:all .35s var(--ease-expo);padding:8px 20px;border:1px solid var(--border);border-radius:100px;background:var(--bg-card)}
+    .trust-logo:hover{opacity:1.4;border-color:var(--border-hover);background:var(--bg-card-hover);color:var(--text-1)}
+
+    /* ==========================================
+       METRICS
+       ========================================== */
+    .metrics{padding:80px 0 0}
+    .metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--border)}
+    .metric{background:var(--bg-1);padding:44px 28px;text-align:center;transition:all .35s var(--ease-expo)}
+    .metric:hover{background:var(--bg-2);transform:scale(1.02)}
+    .metric-num{font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);font-weight:700;letter-spacing:-1.5px;margin-bottom:6px;line-height:1}
+    .metric-num .hi{color:var(--accent-light)}
+    .metric-label{font-size:13px;font-weight:500;color:var(--text-3);letter-spacing:.3px}
+
+    /* ==========================================
+       ABOUT
+       ========================================== */
+    .section-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border-hover),transparent);margin:0 auto}
+    .about{padding:160px 0}
+    .about-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:80px;align-items:center}
+
+    .about-media{position:relative}
+    .about-img-wrap{position:relative;border-radius:var(--r-2xl);overflow:hidden;aspect-ratio:4/3;border:1px solid var(--border)}
+    .about-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(108,92,231,.08),transparent 50%);pointer-events:none}
+    .about-img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease-expo)}
+    .about-img-wrap:hover .about-img{transform:scale(1.04)}
+
+    /* Corner accent */
+    .about-corner{position:absolute;top:-16px;left:-16px;width:48px;height:48px;border-left:2px solid var(--accent);border-top:2px solid var(--accent);border-radius:2px 0 0 0;opacity:.45}
+
+    /* Experience badge overlaying image */
+    .about-exp{position:absolute;bottom:24px;right:24px;background:rgba(6,7,11,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 20px;display:flex;align-items:center;gap:12px}
+    .about-exp-num{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent-light);line-height:1}
+    .about-exp-text{font-size:12px;color:var(--text-2);font-weight:500;line-height:1.3}
+
+    .section-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--accent-light);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
+    .section-tag::before{content:'';width:20px;height:1.5px;background:var(--accent);border-radius:1px}
+
+    .about-h2{font-family:var(--font-display);font-size:clamp(28px,3.2vw,42px);font-weight:700;line-height:1.12;letter-spacing:-1px;margin-bottom:24px}
+
+    .about-p{font-size:16px;color:var(--text-2);line-height:1.8;margin-bottom:16px}
+
+    .about-badge{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:14px 22px;background:var(--accent-subtle);border:1px solid rgba(108,92,231,.15);border-radius:var(--r-md);font-size:14px;font-weight:500;color:var(--accent-light);transition:all .3s}
+    .about-badge:hover{border-color:rgba(108,92,231,.3);background:rgba(108,92,231,.1)}
+    .about-badge svg{width:18px;height:18px;flex-shrink:0}
+
+    /* ==========================================
+       EXPERTISE
+       ========================================== */
+    .expertise{padding:160px 0;background:var(--bg-1);position:relative}
+    .expertise::before,.expertise::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-hover),transparent)}
+    .expertise::before{top:0}
+    .expertise::after{bottom:0}
+
+    .expertise-header{text-align:center;max-width:600px;margin:0 auto 72px}
+    .expertise-h2{font-family:var(--font-display);font-size:clamp(28px,3.2vw,42px);font-weight:700;line-height:1.12;letter-spacing:-1px;margin-bottom:16px}
+    .expertise-sub{font-size:17px;color:var(--text-2);line-height:1.7}
+
+    .expertise-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+
+    .exp-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xl);padding:36px;transition:all .4s var(--ease-expo);overflow:hidden}
+    .exp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-light));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease-expo)}
+    .exp-card::after{content:'';position:absolute;top:0;right:0;width:200px;height:200px;background:radial-gradient(circle,rgba(108,92,231,.04),transparent 70%);opacity:0;transition:opacity .4s;pointer-events:none}
+    .exp-card:hover{background:var(--bg-card-hover);border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 24px 64px rgba(0,0,0,.3),0 0 80px -20px rgba(108,92,231,.08)}
+    .exp-card:hover::before{transform:scaleX(1)}
+    .exp-card:hover::after{opacity:1}
+
+    .exp-icon{width:48px;height:48px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:all .4s var(--ease-expo)}
+    .exp-card:hover .exp-icon{transform:scale(1.08)}
+    .exp-icon svg{width:22px;height:22px}
+    .exp-icon--purple{background:var(--accent-glow)}
+    .exp-icon--green{background:rgba(52,211,153,.08)}
+    .exp-icon--blue{background:rgba(56,189,248,.08)}
+    .exp-icon--amber{background:rgba(251,191,36,.08)}
+
+    .exp-title{font-family:var(--font-display);font-size:18px;font-weight:600;margin-bottom:10px}
+    .exp-text{font-size:15px;color:var(--text-2);line-height:1.75}
+
+    /* ==========================================
+       SERVICES
+       ========================================== */
+    .services{padding:160px 0;position:relative;overflow:hidden}
+    .services-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:center}
+
+    .services-h2{font-family:var(--font-display);font-size:clamp(24px,2.8vw,34px);font-weight:700;line-height:1.25;letter-spacing:-.5px;margin-bottom:20px}
+    .services-p{font-size:16px;color:var(--text-2);line-height:1.8;margin-bottom:32px}
+
+    .check-list{display:flex;flex-direction:column;gap:14px}
+    .check-item{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:500;color:var(--text-2);transition:color .2s}
+    .check-item:hover{color:var(--text-1)}
+    .check-dot{width:24px;height:24px;border-radius:50%;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+    .check-item:hover .check-dot{background:rgba(52,211,153,.15);border-color:rgba(52,211,153,.35)}
+    .check-dot svg{width:12px;height:12px;color:var(--emerald)}
+
+    .services-media{position:relative}
+    .services-img-wrap{border-radius:var(--r-2xl);overflow:hidden;aspect-ratio:4/3;border:1px solid var(--border);position:relative}
+    .services-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(6,7,11,.25),transparent 45%);pointer-events:none}
+    .services-img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease-expo)}
+    .services-img-wrap:hover .services-img{transform:scale(1.04)}
+
+    /* Floating stat on the image */
+    .services-stat{position:absolute;top:24px;left:24px;background:rgba(6,7,11,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 20px}
+    .services-stat-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+    .services-stat-value{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--emerald)}
+
+    /* ==========================================
+       CONTACT
+       ========================================== */
+    .contact{padding:160px 0;position:relative;overflow:hidden}
+
+    .contact-bg{position:absolute;inset:0;background:linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 100%)}
+    .contact-orb-a{position:absolute;width:600px;height:600px;background:var(--accent);opacity:.05;border-radius:50%;filter:blur(140px);top:-20%;left:50%;transform:translateX(-50%)}
+    .contact-orb-b{position:absolute;width:300px;height:300px;background:var(--sky);opacity:.04;border-radius:50%;filter:blur(100px);bottom:0;right:10%}
+
+    .contact-inner{position:relative;z-index:1;text-align:center;max-width:640px;margin:0 auto}
+
+    .contact-h2{font-family:var(--font-display);font-size:clamp(34px,4.5vw,56px);font-weight:700;line-height:1.08;letter-spacing:-2px;margin-bottom:18px}
+    .contact-h2 .gradient{background:linear-gradient(135deg,var(--accent-light),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+    .contact-p{font-size:17px;color:var(--text-2);line-height:1.7;margin-bottom:44px}
+
+    .contact-btns{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:72px}
+
+    .contact-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:440px;margin:0 auto}
+    .cc{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px 20px;text-align:center;transition:all .35s var(--ease-expo)}
+    .cc:hover{border-color:var(--border-accent);background:var(--bg-card-hover);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,.25),0 0 0 1px rgba(108,92,231,.1)}
+    .cc-icon{width:36px;height:36px;border-radius:50%;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;transition:all .35s var(--ease-expo)}
+    .cc-icon svg{width:16px;height:16px;color:var(--accent-light);transition:color .3s}
+    .cc:hover .cc-icon{background:rgba(108,92,231,.2);box-shadow:0 0 16px rgba(108,92,231,.15)}
+    .cc:hover .cc-icon svg{color:#fff}
+    .cc-label{font-size:11px;font-weight:600;color:var(--text-4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+    .cc-value{font-size:15px;font-weight:600;color:var(--text-1)}
+    .cc-value a{color:var(--text-1);transition:color .2s}
+    .cc-value a:hover{color:var(--accent-light)}
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    .footer{padding:64px 0 32px;border-top:1px solid var(--border);background:var(--bg-0)}
+    .footer-top{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;margin-bottom:48px;flex-wrap:wrap}
+
+    .footer-brand{max-width:280px}
+    .footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+    .footer-logo-mark{width:30px;height:30px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:12px;color:#fff}
+    .footer-logo-text{font-family:var(--font-display);font-weight:600;font-size:15px}
+    .footer-tagline{font-size:14px;color:var(--text-3);line-height:1.65}
+
+    .footer-office{text-align:center}
+    .footer-office-label{font-size:11px;font-weight:600;color:var(--text-4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+    .footer-office-img{width:220px;aspect-ratio:16/10;object-fit:cover;border-radius:var(--r-md);border:1px solid var(--border);margin:0 auto 12px;transition:all .4s}
+    .footer-office-img:hover{border-color:var(--border-hover);transform:scale(1.02)}
+    .footer-country{font-family:var(--font-display);font-weight:600;font-size:15px;margin-bottom:6px}
+    .footer-address{font-size:13px;color:var(--text-3);line-height:1.7}
+
+    .footer-links{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+    .footer-links a{font-size:14px;color:var(--text-3);transition:color .2s}
+    .footer-links a:hover{color:var(--accent-light)}
+
+    .footer-bottom{padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .footer-copy{font-size:13px;color:var(--text-4)}
+    .footer-legal{font-size:13px;color:var(--text-4)}
+
+    .back-to-top{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text-3);transition:all .3s;padding:8px 16px;border-radius:100px;border:1px solid var(--border)}
+    .back-to-top:hover{color:var(--accent-light);border-color:var(--border-accent);transform:translateY(-2px)}
+    .back-to-top svg{width:14px;height:14px;transition:transform .3s}
+    .back-to-top:hover svg{transform:translateY(-2px)}
+
+    /* ==========================================
+       RESPONSIVE — TABLET
+       ========================================== */
+    @media(max-width:1024px){
+      :root{--px:32px}
+      .hero-visual{display:none}
+      .metrics-grid{grid-template-columns:repeat(2,1fr)}
+      .about-grid{grid-template-columns:1fr;gap:48px}
+      .expertise-cards{grid-template-columns:1fr}
+      .services-grid{grid-template-columns:1fr;gap:48px}
+      .footer-top{flex-direction:column;align-items:center;text-align:center}
+      .footer-brand{max-width:100%;text-align:center}
+      .footer-links{align-items:center}
+      .footer-bottom{justify-content:center;text-align:center;flex-direction:column}
     }
 
-    .hero-headline {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      font-style: italic;
-      font-size: clamp(36px, 5vw, 56px);
-      color: #fff;
-      line-height: 1.15;
-      margin-bottom: 40px;
+    /* ==========================================
+       RESPONSIVE — MOBILE
+       ========================================== */
+    @media(max-width:768px){
+      :root{--px:20px}
+      .nav-menu{display:none}
+      .nav-toggle{display:flex;flex-direction:column}
+      .nav-menu.is-open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(6,7,11,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px var(--px);gap:16px;border-bottom:1px solid var(--border)}
+
+      .hero{min-height:auto;padding:110px 0 60px}
+      .hero-h1{letter-spacing:-1.5px}
+      .hero-actions{flex-direction:column;align-items:stretch}
+      .btn{justify-content:center}
+      .trust-logos{gap:28px}
+      .metrics-grid{grid-template-columns:repeat(2,1fr)}
+      .metric{padding:28px 16px}
+      .about,.expertise,.services,.contact{padding:100px 0}
+      .contact-cards{grid-template-columns:1fr}
+      .contact-btns{flex-direction:column;align-items:center}
+      .expertise-header{margin-bottom:48px}
     }
 
-    .hero-btn {
-      display: inline-block;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #3730A3;
-      background: #fff;
-      padding: 16px 40px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    .hero-btn:hover {
-      background: rgba(255,255,255,0.9);
-      transform: translateY(-1px);
+    @media(max-width:480px){
+      .metrics-grid{grid-template-columns:1fr 1fr}
+      .metric-num{font-size:28px}
+      .trust-logos{gap:20px}
+      .trust-logo{font-size:15px}
     }
 
-    /* ======================================
-       SECTION 2: ABOUT — White, Photo + Text
-       ====================================== */
-    .about {
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background: #fff;
-      padding: 80px 0;
-    }
-
-    .about-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 60px;
-      align-items: center;
-      padding: 0 48px;
-    }
-
-    .about-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      border-radius: 2px;
-    }
-
-    .about-heading {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      font-size: clamp(28px, 3vw, 38px);
-      line-height: 1.25;
-      margin-bottom: 28px;
-      color: #1a1a1a;
-    }
-
-    .about-text {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.75;
-      margin-bottom: 16px;
-    }
-
-    /* ======================================
-       SECTION 3: EXPERTISE — Text + Image
-       ====================================== */
-    .expertise {
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background: #fff;
-      padding: 80px 0;
-    }
-
-    .expertise-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-      padding: 0 48px;
-    }
-
-    .expertise-left {
-      padding-right: 40px;
-      border-right: 1px solid #e5e5e5;
-    }
-
-    .expertise-heading {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      font-size: clamp(28px, 3vw, 38px);
-      margin-bottom: 32px;
-      color: #1a1a1a;
-    }
-
-    .expertise-list {
-      list-style: disc;
-      padding-left: 20px;
-    }
-
-    .expertise-list li {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.75;
-      margin-bottom: 8px;
-    }
-
-    .expertise-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      border-radius: 2px;
-    }
-
-    /* ======================================
-       SECTION 4: SERVICES — Quote + Image
-       ====================================== */
-    .services {
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background: #fff;
-      padding: 80px 0;
-    }
-
-    .services-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      padding: 0 48px;
-    }
-
-    .services-quote {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-style: italic;
-      font-size: clamp(22px, 2.5vw, 32px);
-      line-height: 1.4;
-      color: #1a1a1a;
-    }
-
-    .services-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      border-radius: 2px;
-    }
-
-    /* ======================================
-       SECTION 5: CONTACT — Gradient
-       ====================================== */
-    .contact {
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 25%, #4338CA 50%, #1e3a8a 100%);
-      padding: 80px 48px;
-      text-align: center;
-    }
-
-    .contact-heading {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      font-style: italic;
-      font-size: clamp(36px, 4vw, 52px);
-      color: #fff;
-      margin-bottom: 16px;
-    }
-
-    .contact-sub {
-      font-size: 15px;
-      color: rgba(255,255,255,0.8);
-      margin-bottom: 36px;
-    }
-
-    .contact-btn {
-      display: inline-block;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #3730A3;
-      background: #fff;
-      padding: 16px 40px;
-      text-decoration: none;
-      margin-bottom: 80px;
-      transition: all 0.3s ease;
-    }
-    .contact-btn:hover {
-      background: rgba(255,255,255,0.9);
-      transform: translateY(-1px);
-    }
-
-    .contact-details {
-      display: flex;
-      gap: 120px;
-      margin-top: auto;
-    }
-
-    .contact-item-label {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-    .contact-item-value {
-      font-size: 14px;
-      color: rgba(255,255,255,0.85);
-    }
-    .contact-item-value a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-    }
-    .contact-item-value a:hover { color: #fff; }
-
-    /* ======================================
-       SECTION 6: OFFICE — White
-       ====================================== */
-    .office {
-      width: 100%;
-      min-height: 80vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      padding: 80px 48px;
-      text-align: center;
-    }
-
-    .office-heading {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      font-style: italic;
-      font-size: clamp(36px, 4vw, 52px);
-      color: #1a0dab;
-      margin-bottom: 36px;
-    }
-
-    .office-img {
-      width: 280px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 2px;
-      margin-bottom: 24px;
-    }
-
-    .office-country {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      color: #1a0dab;
-      margin-bottom: 28px;
-    }
-
-    .office-address {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.7;
-    }
-
-    /* ======================================
-       RESPONSIVE
-       ====================================== */
-    @media (max-width: 768px) {
-      .hero-nav { padding: 24px 24px; }
-      .hero-content { margin-right: auto; padding: 0 24px; text-align: center; }
-      .about-inner,
-      .expertise-inner,
-      .services-inner {
-        grid-template-columns: 1fr;
-        padding: 0 24px;
-        gap: 32px;
-      }
-      .expertise-left { border-right: none; padding-right: 0; border-bottom: 1px solid #e5e5e5; padding-bottom: 32px; }
-      .contact { padding: 60px 24px; }
-      .contact-details { flex-direction: column; gap: 32px; }
-      .office { padding: 60px 24px; }
+    /* Respect reduced motion preference */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+      .reveal{opacity:1;transform:none}
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== HERO ===== -->
-  <section class="hero">
-    <canvas id="meshCanvas"></canvas>
-    <nav class="hero-nav">
-      <div class="hero-logo">AX<br>Technologies</div>
-      <a href="https://forms.gle/i3xaYvVwHd3XxChLA" class="hero-nav-link">Contact us</a>
-    </nav>
-    <div class="hero-content">
-      <h1 class="hero-headline">We help founders go to market</h1>
-      <a href="https://forms.gle/i3xaYvVwHd3XxChLA" class="hero-btn">Contact Us</a>
+  <!-- NAV -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo" aria-label="AX Technologies">
+        <div class="logo-mark">AX</div>
+        <div class="logo-text">AX Technologies</div>
+      </a>
+      <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-menu').classList.toggle('is-open')">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-menu">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#expertise" class="nav-link">Expertise</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li>
+          <a href="https://forms.gle/i3xaYvVwHd3XxChLA" class="nav-cta" target="_blank" rel="noopener">
+            Get in Touch
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-orb hero-orb--a"></div>
+      <div class="hero-orb hero-orb--b"></div>
+      <div class="hero-orb hero-orb--c"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-glow"></div>
+    </div>
+
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Technology partner for ambitious founders
+      </div>
+      <h1 class="hero-h1">We help founders<br><span class="gradient">go to market</span></h1>
+      <p class="hero-p">Building fintech and edtech platforms that scale to millions of users. Eight years of engineering excellence, from concept to launch.</p>
+      <div class="hero-actions">
+        <a href="https://forms.gle/i3xaYvVwHd3XxChLA" class="btn btn--primary" target="_blank" rel="noopener">
+          Start a Conversation
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </a>
+        <a href="#about" class="btn btn--ghost">Learn More</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="float-card float-card--a">
+        <div class="fc-icon fc-icon--purple">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#A29BFE"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"/></svg>
+        </div>
+        <div class="fc-label">Platforms Built</div>
+        <div class="fc-value">50+</div>
+      </div>
+      <div class="float-card float-card--b">
+        <div class="fc-icon fc-icon--green">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#34D399"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/></svg>
+        </div>
+        <div class="fc-label">Users Reached</div>
+        <div class="fc-value">10M+</div>
+      </div>
+      <div class="float-card float-card--c">
+        <div class="fc-icon fc-icon--blue">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#38BDF8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+        </div>
+        <div class="fc-label">Years</div>
+        <div class="fc-value">8+</div>
+      </div>
     </div>
   </section>
 
-  <!-- ===== ABOUT ===== -->
-  <section class="about">
-    <div class="about-inner">
-      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=450&fit=crop" alt="Team working with data dashboards" class="about-img" loading="lazy">
+  <!-- TRUST BAR -->
+  <section class="trust-bar reveal" aria-label="Trusted industries">
+    <div class="container">
+      <div class="trust-label">Trusted across industries</div>
+      <div class="trust-logos">
+        <div class="trust-logo">Fintech</div>
+        <div class="trust-logo">Edtech</div>
+        <div class="trust-logo">SaaS</div>
+        <div class="trust-logo">Marketplaces</div>
+        <div class="trust-logo">Enterprise</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <section class="metrics reveal" aria-label="Key metrics">
+    <div class="container">
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-num">8<span class="hi">+</span></div>
+          <div class="metric-label">Years of Experience</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">50<span class="hi">+</span></div>
+          <div class="metric-label">Platforms Built</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">10M<span class="hi">+</span></div>
+          <div class="metric-label">Users Reached</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">24<span class="hi">/7</span></div>
+          <div class="metric-label">Dedicated Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-media reveal">
+        <div class="about-corner" aria-hidden="true"></div>
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80" alt="Team working with data dashboards" class="about-img" loading="lazy">
+          <div class="about-exp">
+            <div class="about-exp-num">8+</div>
+            <div class="about-exp-text">Years building<br>tech platforms</div>
+          </div>
+        </div>
+      </div>
       <div>
-        <h2 class="about-heading">We are a team of product managers, engineers, and marketers</h2>
-        <p class="about-text">We've spent eight years building tech platforms for finance and education companies.</p>
-        <p class="about-text">We have worked with small and large businesses including customer facing platforms that have scaled to millions of users.</p>
+        <div class="section-tag reveal">Who We Are</div>
+        <h2 class="about-h2 reveal d1">A team of product managers, engineers, and marketers</h2>
+        <p class="about-p reveal d2">We've spent eight years building technology platforms for finance and education companies. Our team combines deep technical expertise with a sharp eye for product-market fit.</p>
+        <p class="about-p reveal d3">We have worked with businesses of all sizes, including customer-facing platforms that have scaled to millions of users worldwide.</p>
+        <div class="about-badge reveal d4">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
+          Trusted by startups and enterprises across fintech &amp; edtech
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== EXPERTISE ===== -->
-  <section class="expertise">
-    <div class="expertise-inner">
-      <div class="expertise-left">
-        <h2 class="expertise-heading">Expertise</h2>
-        <ul class="expertise-list">
-          <li>Building fintech & edtech web platforms and mobile apps</li>
-          <li>Helping brands enter new markets</li>
-        </ul>
+  <!-- EXPERTISE -->
+  <section class="expertise" id="expertise">
+    <div class="container">
+      <div class="expertise-header">
+        <div class="section-tag reveal" style="justify-content:center">What We Do</div>
+        <h2 class="expertise-h2 reveal d1">Deep expertise where it matters</h2>
+        <p class="expertise-sub reveal d2">We focus on the intersection of technology and growth, building products that users love and markets demand.</p>
       </div>
-      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=450&fit=crop" alt="Technology network" class="expertise-img" loading="lazy">
+      <div class="expertise-cards">
+        <div class="exp-card reveal">
+          <div class="exp-icon exp-icon--purple">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#A29BFE"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/></svg>
+          </div>
+          <h3 class="exp-title">Fintech & Edtech Platforms</h3>
+          <p class="exp-text">End-to-end web platforms and mobile apps built for scale. From payment systems to learning management, we engineer solutions that handle millions of transactions.</p>
+        </div>
+        <div class="exp-card reveal d1">
+          <div class="exp-icon exp-icon--green">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#34D399"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+          </div>
+          <h3 class="exp-title">Market Entry Strategy</h3>
+          <p class="exp-text">Helping brands enter new markets with localized technology stacks, compliance-ready infrastructure, and go-to-market playbooks tailored to each region.</p>
+        </div>
+        <div class="exp-card reveal d2">
+          <div class="exp-icon exp-icon--blue">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#38BDF8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>
+          </div>
+          <h3 class="exp-title">Product Engineering</h3>
+          <p class="exp-text">Full-stack development with modern architectures. We build performant, secure, and maintainable codebases that your team can grow with confidently.</p>
+        </div>
+        <div class="exp-card reveal d3">
+          <div class="exp-icon exp-icon--amber">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FBBF24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6"/></svg>
+          </div>
+          <h3 class="exp-title">Growth & Scale</h3>
+          <p class="exp-text">From zero to millions of users. We architect for growth from day one, ensuring your infrastructure handles exponential adoption without breaking.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ===== SERVICES ===== -->
-  <section class="services">
-    <div class="services-inner">
-      <p class="services-quote">We can help get your product to market - enabling you to focus on acquiring clients while we manage the technology.</p>
-      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=450&fit=crop" alt="Data analytics on laptop" class="services-img" loading="lazy">
-    </div>
-  </section>
+  <div class="section-divider" aria-hidden="true"></div>
 
-  <!-- ===== CONTACT ===== -->
-  <section class="contact">
-    <h2 class="contact-heading">Talk To Us</h2>
-    <p class="contact-sub">Feel free to call, or email us.</p>
-    <a href="https://forms.gle/i3xaYvVwHd3XxChLA" class="contact-btn">Contact Us</a>
-    <div class="contact-details">
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container services-grid">
       <div>
-        <div class="contact-item-label">Phone</div>
-        <div class="contact-item-value"><a href="tel:+971554647595">+971 554647595</a></div>
+        <div class="section-tag reveal">Our Promise</div>
+        <h2 class="services-h2 reveal d1">We get your product to market &mdash; so you can focus on acquiring clients while we manage the technology.</h2>
+        <p class="services-p reveal d2">Our end-to-end approach means you get a dedicated team that handles everything from architecture to deployment, letting you focus on what matters most: your customers.</p>
+        <div class="check-list reveal d3">
+          <div class="check-item">
+            <div class="check-dot"><svg fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg></div>
+            Full-stack development & DevOps
+          </div>
+          <div class="check-item">
+            <div class="check-dot"><svg fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg></div>
+            Product strategy & UX design
+          </div>
+          <div class="check-item">
+            <div class="check-dot"><svg fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg></div>
+            Go-to-market execution
+          </div>
+          <div class="check-item">
+            <div class="check-dot"><svg fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg></div>
+            Ongoing support & maintenance
+          </div>
+        </div>
       </div>
-      <div>
-        <div class="contact-item-label">Email</div>
-        <div class="contact-item-value"><a href="mailto:hello@axtech.xyz">hello@axtech.xyz</a></div>
+      <div class="services-media reveal d2">
+        <div class="services-img-wrap">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&q=80" alt="Analytics dashboard on laptop" class="services-img" loading="lazy">
+          <div class="services-stat">
+            <div class="services-stat-label">Client Satisfaction</div>
+            <div class="services-stat-value">98%</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== OFFICE ===== -->
-  <section class="office">
-    <h2 class="office-heading">Our Office</h2>
-    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=260&fit=crop" alt="Dubai skyline" class="office-img" loading="lazy">
-    <div class="office-country">United Arab Emirates</div>
-    <div class="office-address">
-      AX Technologies FZ-LLC<br>
-      Al Shohada Road,<br>
-      Al Hamra Industrial Zone<br>
-      Ras Al Khaimah, UAE
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-bg" aria-hidden="true">
+      <div class="contact-orb-a"></div>
+      <div class="contact-orb-b"></div>
+    </div>
+    <div class="container contact-inner">
+      <div class="section-tag reveal" style="justify-content:center">Let's Connect</div>
+      <h2 class="contact-h2 reveal d1">Ready to build<br><span class="gradient">something great?</span></h2>
+      <p class="contact-p reveal d2">Tell us about your project. We'll respond within 24 hours with a tailored plan to bring your vision to life.</p>
+      <div class="contact-btns reveal d3">
+        <a href="https://forms.gle/i3xaYvVwHd3XxChLA" class="btn btn--primary" target="_blank" rel="noopener">
+          Contact Us
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </a>
+        <a href="mailto:hello@axtech.xyz" class="btn btn--ghost">Email Us Directly</a>
+      </div>
+      <div class="contact-cards reveal d4">
+        <div class="cc">
+          <div class="cc-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+          </div>
+          <div class="cc-label">Phone</div>
+          <div class="cc-value"><a href="tel:+971554647595">+971 554 647 595</a></div>
+        </div>
+        <div class="cc">
+          <div class="cc-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+          </div>
+          <div class="cc-label">Email</div>
+          <div class="cc-value"><a href="mailto:hello@axtech.xyz">hello@axtech.xyz</a></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ===== 3D WIREFRAME MESH SCRIPT ===== -->
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-mark">AX</div>
+            <div class="footer-logo-text">AX Technologies</div>
+          </div>
+          <p class="footer-tagline">Technology partners for ambitious founders. Building platforms that scale to millions.</p>
+        </div>
+
+        <div class="footer-office">
+          <div class="footer-office-label">Our Office</div>
+          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=440&h=275&fit=crop&q=80" alt="Dubai skyline" class="footer-office-img" loading="lazy">
+          <div class="footer-country">United Arab Emirates</div>
+          <div class="footer-address">
+            AX Technologies FZ-LLC<br>
+            Al Shohada Road, Al Hamra Industrial Zone<br>
+            Ras Al Khaimah, UAE
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#expertise">Expertise</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+          <a href="mailto:hello@axtech.xyz">hello@axtech.xyz</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copy">&copy; 2026 AX Technologies FZ-LLC. All rights reserved.</div>
+        <a href="#hero" class="back-to-top">
+          Back to top
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"/></svg>
+        </a>
+        <div class="footer-legal">Registered in RAK, UAE</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
   <script>
-    (function() {
-      const canvas = document.getElementById('meshCanvas');
-      const ctx = canvas.getContext('2d');
-      let w, h, points = [], mouse = { x: 0, y: 0 };
-      const COLS = 50, ROWS = 30;
+    (function(){
+      // Scroll reveal
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+      }, {threshold:.08, rootMargin:'0px 0px -32px 0px'});
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-      function resize() {
-        w = canvas.width = canvas.offsetWidth;
-        h = canvas.height = canvas.offsetHeight;
-        initPoints();
-      }
+      // Nav scroll
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('is-scrolled', window.scrollY > 40);
+      }, {passive:true});
 
-      function initPoints() {
-        points = [];
-        const spacingX = w * 0.45 / COLS;
-        const spacingY = h * 0.7 / ROWS;
-        const offsetX = w * 0.02;
-        const offsetY = h * 0.15;
-        for (let r = 0; r < ROWS; r++) {
-          for (let c = 0; c < COLS; c++) {
-            points.push({
-              x: offsetX + c * spacingX,
-              y: offsetY + r * spacingY,
-              baseX: offsetX + c * spacingX,
-              baseY: offsetY + r * spacingY,
-              col: c, row: r
-            });
-          }
-        }
-      }
-
-      function animate(t) {
-        ctx.clearRect(0, 0, w, h);
-        const time = t * 0.001;
-
-        // Update points with wave motion
-        for (let i = 0; i < points.length; i++) {
-          const p = points[i];
-          const wave1 = Math.sin(p.col * 0.15 + time * 0.8) * 18;
-          const wave2 = Math.cos(p.row * 0.2 + time * 0.6) * 12;
-          const wave3 = Math.sin((p.col + p.row) * 0.1 + time * 0.5) * 10;
-          p.y = p.baseY + wave1 + wave2 + wave3;
-        }
-
-        // Draw dots
-        for (let i = 0; i < points.length; i++) {
-          const p = points[i];
-          // Fade at edges
-          const nx = (p.x - w * 0.02) / (w * 0.45);
-          const ny = (p.baseY - h * 0.15) / (h * 0.7);
-          const edgeFade = Math.min(1, nx * 3, (1 - nx) * 3) * Math.min(1, ny * 3, (1 - ny) * 3);
-          const alpha = Math.max(0, edgeFade * 0.6);
-
-          if (alpha > 0.02) {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-            ctx.fill();
-          }
-        }
-
-        requestAnimationFrame(animate);
-      }
-
-      window.addEventListener('resize', resize);
-      resize();
-      requestAnimationFrame(animate);
+      // Smooth anchor
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e){
+          e.preventDefault();
+          const t = document.querySelector(this.getAttribute('href'));
+          if(t){t.scrollIntoView({behavior:'smooth',block:'start'});document.querySelector('.nav-menu').classList.remove('is-open')}
+        });
+      });
     })();
   </script>
 
